@@ -3,61 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campus Digital — Dashboard</title>
+    <title>Bien Préparer sa Manœuvre Mensuelle</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --bg: #1a1c24; --surface: #23272e; --accent: #5865F2; --text: #ffffff; }
-        body { background: var(--bg); color: var(--text); font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
-        .dashboard { background: var(--surface); padding: 30px; border-radius: 20px; width: 100%; max-width: 400px; border: 1px solid #3f4455; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .logo { width: 140px; height: 140px; border-radius: 50%; border: 3px solid var(--accent); margin-bottom: 20px; object-fit: cover; background: white; }
-        h1 { font-size: 24px; margin: 10px 0; letter-spacing: 1px; }
-        .motto { color: #f7b731; font-size: 13px; text-transform: uppercase; margin-bottom: 25px; }
-        .task { display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(0,0,0,0.2); margin-top: 8px; border-radius: 10px; cursor: pointer; text-align: left; transition: 0.2s; }
-        .task:hover { border-color: var(--accent); }
-        .checkbox { width: 18px; height: 18px; border: 2px solid var(--accent); border-radius: 4px; flex-shrink: 0; }
-        .done .checkbox { background: var(--accent); }
-        .done span { text-decoration: line-through; opacity: 0.5; }
-        .bar-bg { background: #000; height: 8px; border-radius: 4px; margin-top: 15px; overflow: hidden; }
-        .bar-fill { background: var(--accent); height: 100%; width: 0%; transition: 0.4s; }
+        :root {
+            --primary-color: #2f3437;
+            --accent-color: #2383e2;
+            --bg-color: #ffffff;
+            --text-color: #37352f;
+            --check-bg: #f1f1ef;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        /* Style pour ton logo / photo d'en-tête */
+        .header-logo {
+            width: 100%; /* Prend toute la largeur du conteneur */
+            max-height: 250px; /* Limite la hauteur pour ne pas trop descendre */
+            object-fit: cover; /* Recadre proprement l'image */
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            border-bottom: 1px solid #eaeaea;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        h2 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5em;
+            color: var(--primary-color);
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 10px 0;
+            padding: 8px;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .todo-item:hover {
+            background-color: var(--check-bg);
+        }
+
+        input[type="checkbox"] {
+            margin-right: 15px;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .content-box {
+            background: #f7f6f3;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-color);
+            margin: 20px 0;
+        }
+
+        .callout {
+            background: #fdf2f2;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.8em;
+            color: #888;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-<div class="dashboard">
-    <img src="logo.png" class="logo" alt="Logo">
-    <h1>CAMPUS DIGITAL</h1>
-    <div class="motto">"L'échec est un diplôme"</div>
+<div class="container">
+    <header>
+        <img src="logo.png" alt="Logo Manœuvre" class="header-logo">
+        
+        <h1>Bien Préparer sa Manœuvre Mensuelle</h1>
+        <p class="subtitle">Guide méthodologique pour une préparation efficace et sécurisée.</p>
+    </header>
 
-    <div style="text-align: left; font-size: 11px; color: #949ba4;">PROGRESSION</div>
-    <div class="bar-bg"><div class="bar-fill" id="fill"></div></div>
-
-    <div id="taskList" style="margin-top: 20px;">
-        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Analyse du besoin</span> </div>
-        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Objectifs Pédagogiques</span> </div>
-        <div class="task" onclick="toggle(this)"> <div class="checkbox"></div> <span>Scénarisation</span> </div>
+    <div class="section">
+        <h2><i class="fas fa-bullseye"></i> Objectifs de la manœuvre</h2>
+        <div class="content-box">
+            <ul>
+                <li>Valider les acquis techniques de l'équipe.</li>
+                <li>Assurer la maintenance opérationnelle du matériel.</li>
+                <li>Renforcer la cohésion et les automatismes de sécurité.</li>
+            </ul>
+        </div>
     </div>
+
+    <div class="section">
+        <h2><i class="fas fa-tasks"></i> Avant la manœuvre (Check-list)</h2>
+        <div class="todo-item">
+            <input type="checkbox"> <span>Définir le thème et le scénario de l'exercice.</span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox"> <span>Vérifier la disponibilité du personnel et des véhicules.</span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox"> <span>Préparer les zones d'évolution et balisage.</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-exclamation-triangle" style="color: #d44020;"></i> Consignes de Sécurité</h2>
+        <div class="callout">
+            <i class="fas fa-shield-alt fa-2x" style="color: #d44020;"></i>
+            <div>
+                <strong>Point de vigilance :</strong> Port des EPI obligatoire. Désignation d'un responsable sécurité.
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        Document généré pour l'organisation des manœuvres mensuelles &copy; 2024
+    </footer>
 </div>
-
-<script>
-    function toggle(el) {
-        el.classList.toggle('done');
-        const tasks = document.querySelectorAll('.task');
-        const done = document.querySelectorAll('.done');
-        const pct = Math.round((done.length / tasks.length) * 100);
-        document.getElementById('fill').style.width = pct + '%';
-        // Sauvegarde locale
-        const states = Array.from(tasks).map(t => t.classList.contains('done'));
-        localStorage.setItem('campus_prog', JSON.stringify(states));
-    }
-
-    // Chargement de la sauvegarde
-    const saved = JSON.parse(localStorage.getItem('campus_prog'));
-    if(saved) {
-        const tasks = document.querySelectorAll('.task');
-        saved.forEach((isDone, i) => { if(isDone) tasks[i].classList.add('done'); });
-        const done = document.querySelectorAll('.done');
-        document.getElementById('fill').style.width = Math.round((done.length / tasks.length) * 100) + '%';
-    }
-</script>
 
 </body>
 </html>
