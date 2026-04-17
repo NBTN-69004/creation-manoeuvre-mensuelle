@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary-color: #2c3e50;
-            --accent-color: #3498db;
+            --accent-color: #27ae60; /* Vert pour la progression */
             --bg-color: #f4f7f6;
             --card-bg: #ffffff;
             --text-color: #333;
@@ -20,9 +20,51 @@
             color: var(--text-color);
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
+            padding: 80px 20px 20px 20px; /* Espace pour la barre fixe en haut */
         }
 
+        /* --- Barre de progression fixe --- */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 10px 0;
+        }
+
+        .progress-wrapper {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+
+        .progress-bar-bg {
+            background: #e0e0e0;
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        #progress-fill {
+            background: var(--accent-color);
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s ease-in-out;
+        }
+
+        /* --- Style du contenu --- */
         .container {
             max-width: 800px;
             margin: 0 auto;
@@ -34,22 +76,20 @@
             background: var(--card-bg);
             border-radius: var(--border-radius);
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden; /* Pour que l'image respecte l'arrondi des angles du header */
+            overflow: hidden;
         }
 
         .header-image {
             width: 100%;
             height: auto;
-            display: block; /* Supprime l'espace sous l'image */
+            display: block;
             margin-bottom: 20px;
         }
 
-        .header-content {
-            padding: 0 20px 20px 20px; /* Padding uniquement sur les côtés et le bas */
-        }
+        .header-content { padding: 0 20px 20px 20px; }
 
         h1 { color: var(--primary-color); margin: 0; font-size: 1.8rem; }
-        .subtitle { color: #666; font-style: italic; margin-top: 5px; margin-bottom: 0; }
+        .subtitle { color: #666; font-style: italic; margin-top: 5px; }
 
         .section {
             background: var(--card-bg);
@@ -82,212 +122,145 @@
             align-items: flex-start;
             margin-bottom: 12px;
             cursor: pointer;
-            padding: 5px;
+            padding: 8px;
             border-radius: 4px;
             transition: background-color 0.2s;
         }
 
+        .checklist-item:hover { background-color: #f0f7ff; }
+
         input[type="checkbox"] {
             margin-top: 5px;
             margin-right: 15px;
-            width: 18px;
-            height: 18px;
+            transform: scale(1.2);
             cursor: pointer;
         }
 
         .content-wrapper { flex: 1; }
 
-        ul {
-            list-style-type: disc;
-            margin: 5px 0 5px 20px;
-            padding: 0;
-            color: #555;
-        }
-
-        li { margin-bottom: 5px; }
-
-        /* Effet au survol */
-        .checklist-item:hover { background-color: #f9f9f9; }
+        ul { margin: 5px 0 5px 20px; padding: 0; color: #555; }
 
         @media (max-width: 600px) {
-            body { padding: 10px; }
-            h1 { font-size: 1.4rem; }
-            .header-content { padding: 0 15px 15px 15px; }
+            body { padding-top: 70px; }
+            h1 { font-size: 1.3rem; }
         }
     </style>
 </head>
 <body>
 
+<div class="progress-container">
+    <div class="progress-wrapper">
+        <div class="progress-text">
+            <span>Progression de la préparation</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progress-fill"></div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <header>
-        <img src="7D4D447F-24E4-4266-B88A-5FC8E4A6B630.png" alt="En-tête Manœuvre" class="header-image">
-        
+        <img src="7D4D447F-24E4-4266-B88A-5FC8E4A6B630.png" alt="En-tête" class="header-image">
         <div class="header-content">
-            <h1>📋 Bien Préparer sa Manœuvre Mensuelle</h1>
-            <p class="subtitle">(Fiche opérationnelle – Chef de manœuvre / Formateur)</p>
+            <h1>📋 Préparation Manœuvre Mensuelle</h1>
+            <p class="subtitle">Fiche de suivi interactive</p>
         </div>
     </header>
 
     <div class="section">
         <label class="checklist-item">
-            <input type="checkbox">
-            <div class="content-wrapper">
-                <strong>Définir le thème de la manœuvre</strong> (incendie, secours routier, SAP, opérations diverses...).
-            </div>
+            <input type="checkbox" class="task-checkbox">
+            <div class="content-wrapper"><strong>Définir le thème de la manœuvre</strong> (incendie, SR, SAP...).</div>
         </label>
     </div>
 
     <div class="section">
-        <div class="section-title"><span class="icon-number">1️⃣</span> Définition des objectifs pédagogiques</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Identifier les compétences à travailler (techniques, organisationnelles, commandement...).</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Adapter la manœuvre au niveau des participants (jeunes SP, SP confirmés, chefs d'agrès...).</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Déterminer les critères de réussite / points d'évaluation.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir les messages pédagogiques clés.</span></label>
+        <div class="section-title"><span class="icon-number">1️⃣</span> Objectifs pédagogiques</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Identifier les compétences à travailler.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Adapter la manœuvre au niveau des participants.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Déterminer les critères de réussite.</span></label>
     </div>
 
     <div class="section">
         <div class="section-title"><span class="icon-number">2️⃣</span> Conception du scénario</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Rédiger la situation initiale (appel, motif d'intervention).</span></label>
-        <label class="checklist-item">
-            <input type="checkbox">
-            <div class="content-wrapper">
-                <span>Définir le contexte opérationnel :</span>
-                <ul>
-                    <li>lieu</li>
-                    <li>type de bâtiment / environnement</li>
-                    <li>nombre de victimes</li>
-                </ul>
-            </div>
-        </label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir les évènements injectés (aggravation, victime découverte, propagation...).</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Déterminer le niveau de difficulté.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir une évolution réaliste du sinistre.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Rédiger la situation initiale.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Définir le contexte (lieu, victimes, bâtiment).</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Prévoir les évènements injectés (aggravation).</span></label>
     </div>
 
     <div class="section">
         <div class="section-title"><span class="icon-number">3️⃣</span> Organisation logistique</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Choisir le site de manœuvre.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Vérifier les autorisations d'accès.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Vérifier la sécurisation du lieu.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir le balisage de la zone.</span></label>
-        <label class="checklist-item">
-            <input type="checkbox">
-            <div class="content-wrapper">
-                <span>Prévoir les zones de regroupement :</span>
-                <ul>
-                    <li>zone engins</li>
-                    <li>zone observateurs</li>
-                    <li>zone débriefing</li>
-                </ul>
-            </div>
-        </label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Choisir et sécuriser le site de manœuvre.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Vérifier les autorisations d'accès.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Prévoir les zones (engins, observateurs, débriefing).</span></label>
     </div>
 
     <div class="section">
         <div class="section-title"><span class="icon-number">4️⃣</span> Moyens humains</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Identifier les participants.</span></label>
-        <label class="checklist-item">
-            <input type="checkbox">
-            <div class="content-wrapper">
-                <span>Désigner les rôles pédagogiques :</span>
-                <ul>
-                    <li>chef de manœuvre</li>
-                    <li>encadrants / observateurs</li>
-                    <li>victimes simulées</li>
-                    <li>figurants</li>
-                </ul>
-            </div>
-        </label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir les responsables sécurité.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Préparer le brief des encadrants.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Désigner les rôles (chef, victimes, plastrons).</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Désigner les responsables sécurité.</span></label>
     </div>
 
     <div class="section">
         <div class="section-title"><span class="icon-number">5️⃣</span> Moyens matériels</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Vérifier la disponibilité des engins.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Préparer le matériel opérationnel nécessaire.</span></label>
-        <label class="checklist-item">
-            <input type="checkbox">
-            <div class="content-wrapper">
-                <span>Prévoir le matériel pédagogique :</span>
-                <ul>
-                    <li>fumigènes / simulateurs</li>
-                    <li>maquillage victimes</li>
-                    <li>cartes scénario</li>
-                </ul>
-            </div>
-        </label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir le matériel de sécurité.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Vérifier l'état du matériel avant la manœuvre.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Vérifier la disponibilité des engins et agrès.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Préparer les simulateurs (fumigènes, maquillage).</span></label>
     </div>
 
     <div class="section">
-        <div class="section-title"><span class="icon-number">6️⃣</span> Sécurité de la manœuvre</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Identifier les risques potentiels.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Mettre en place les mesures de prévention.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Désigner un responsable sécurité.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir un moyen d'arrêt immédiat de l'exercice.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Vérifier les EPI des participants.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Prévoir un moyen de secours réel si nécessaire.</span></label>
+        <div class="section-title"><span class="icon-number">6️⃣</span> Sécurité</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Identifier les risques et mesures de prévention.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Moyen d'arrêt immédiat de l'exercice opérationnel.</span></label>
     </div>
 
     <div class="section">
-        <div class="section-title"><span class="icon-number">7️⃣</span> Préparation pédagogique</div>
-        <label class="checklist-item">
-            <input type="checkbox">
-            <div class="content-wrapper">
-                <span>Préparer le brief initial :</span>
-                <ul>
-                    <li>objectifs</li>
-                    <li>consignes de sécurité</li>
-                    <li>rôle des participants</li>
-                </ul>
-            </div>
-        </label>
-        <label class="checklist-item"><input type="checkbox"> <span>Préparer la grille d'observation.</span></label>
-        <label class="checklist-item">
-            <input type="checkbox">
-            <div class="content-wrapper">
-                <span>Identifier les points à observer :</span>
-                <ul>
-                    <li>commandement</li>
-                    <li>communication</li>
-                    <li>techniques</li>
-                    <li>sécurité</li>
-                </ul>
-            </div>
-        </label>
+        <div class="section-title"><span class="icon-number">7️⃣</span> Préparation Pédagogique</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Préparer le brief (objectifs, sécurité).</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Établir la grille d'observation.</span></label>
     </div>
 
     <div class="section">
-        <div class="section-title"><span class="icon-number">8️⃣</span> Conduite de la manœuvre</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Présenter le contexte de l'intervention.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Lancer l'exercice.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Injecter les évènements prévus dans le scénario.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Observer les comportements et techniques.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Garantir la sécurité en permanence.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Adapter le scénario si nécessaire.</span></label>
+        <div class="section-title"><span class="icon-number">8️⃣</span> Conduite</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Lancer l'exercice et injecter les imprévus.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Garantir la sécurité et adapter le scénario.</span></label>
     </div>
 
     <div class="section">
-        <div class="section-title"><span class="icon-number">9️⃣</span> Débriefing pédagogique</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Laisser les participants s'exprimer en premier.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Analyser les points positifs.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Identifier les axes d'amélioration.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Faire le lien avec la doctrine opérationnelle.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Reformuler les messages pédagogiques clés.</span></label>
+        <div class="section-title"><span class="icon-number">9️⃣</span> Débriefing</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Analyse des points positifs et axes d'amélioration.</span></label>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Lien avec la doctrine et messages clés.</span></label>
     </div>
 
     <div class="section">
-        <div class="section-title"><span class="icon-number">🔟</span> Clôture et suivi</div>
-        <label class="checklist-item"><input type="checkbox"> <span>Ranger et vérifier le matériel.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Noter les points d'amélioration pour la prochaine manœuvre.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Mettre à jour les documents pédagogiques.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Informer la hiérarchie si besoin.</span></label>
-        <label class="checklist-item"><input type="checkbox"> <span>Archiver le compte rendu de manœuvre.</span></label>
+        <div class="section-title"><span class="icon-number">🔟</span> Clôture</div>
+        <label class="checklist-item"><input type="checkbox" class="task-checkbox"> <span>Remise en état du matériel et archivage CR.</span></label>
     </div>
 
 </div>
+
+<script>
+    const checkboxes = document.querySelectorAll('.task-checkbox');
+    const progressBar = document.getElementById('progress-fill');
+    const progressText = document.getElementById('progress-percent');
+
+    function updateProgress() {
+        const total = checkboxes.length;
+        const checked = document.querySelectorAll('.task-checkbox:checked').length;
+        const percentage = Math.round((checked / total) * 100);
+        
+        progressBar.style.width = percentage + '%';
+        progressText.innerText = percentage + '%';
+    }
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateProgress);
+    });
+
+    // Initialisation
+    updateProgress();
+</script>
 
 </body>
 </html>
