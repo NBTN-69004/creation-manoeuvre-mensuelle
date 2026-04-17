@@ -18,7 +18,7 @@
 <body>
     <div class="card">
         <img src="https://i.postimg.cc/8PzL7GfL/image.png" class="logo" alt="Logo">
-        <h1>CAMPUS DIGITAL</h1>
+        <h1>Creation Manoeuvre Mensuelle</h1>
         <p>"L'échec est un diplôme"</p>
         <div style="border-top: 1px solid #3f4455; margin: 20px 0; padding-top: 20px;">
             <p>Plateforme en cours de déploiement...</p>
